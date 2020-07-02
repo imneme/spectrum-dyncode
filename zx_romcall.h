@@ -50,7 +50,7 @@ extern void zx_exit_msg(char* message, short code);
 
 #define ZX_ROM_LD_BYTES   0x0556    // load/verify bytes from tape
 
-#define zx_rom_ld_bytes(type, loadNotVerify, length, start)		\
+#define zx_rom_ld_bytes(type, loadNotVerify, start, length)		\
     ((void) dyncode_zx_romcall(						\
 	DYNCODE_LOAD_A(type),						\
 	DYNCODE_LOAD_IX__, DYNCODE___(start),				\
