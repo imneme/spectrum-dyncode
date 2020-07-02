@@ -3,8 +3,8 @@ CC = zcc +zx -SO3 -clib=sdcc_iy
 
 DYNCODE_OBJS = dyncode_zx_romcall_stdstack.o dyncode_zx_romcall.o	\
 		dyncode_preserve_ix.o dyncode_quick.o \
-		dyncode_zx_romcall_stdstack_err.o \
-		jump_hl.o zx_exit_msg.o \
+		dyncode_zx_romcall_err.o dyncode_zx_romcall_stdstack_err.o \
+		call_with_errhandler.o jump_hl.o zx_exit_msg.o \
 		p3call_private.o
 
 TARGETS = dyncode.lib example.tap p3call_example.tap
@@ -28,9 +28,11 @@ dyncode.lib: $(DYNCODE_OBJS)
 
 dyncode_zx_romcall_stdstack_err.o: dyncode_zx_romcall_stdstack_err.asm
 dyncode_zx_romcall_stdstack.o: dyncode_zx_romcall_stdstack.asm
+dyncode_zx_romcall_err.o: dyncode_zx_romcall_err.asm
 dyncode_zx_romcall.o: dyncode_zx_romcall.asm
 dyncode_preserve_ix.o: dyncode_preserve_ix.asm
 dyncode_quick.o: dyncode_quick.asm
+call_with_errhandler.o: call_with_errhandler.asm
 jump_hl.o: jump_hl.asm
 zx_exit_msg.o: zx_exit_msg.asm
 p3call_private.o: p3call_private.asm
