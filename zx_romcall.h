@@ -51,12 +51,16 @@ extern void zx_exit_msg(char* message, short code);
 #define ZX_ROM_LD_BYTES   0x0556    // load/verify bytes from tape
 
 #define zx_rom_ld_bytes(type, loadNotVerify, start, length)		\
-    ((void) dyncode_zx_romcall(						\
+    ((short) dyncode_zx_romcall(					\
 	DYNCODE_LOAD_A(type),						\
 	DYNCODE_LOAD_IX__, DYNCODE___(start),				\
 	DYNCODE_LOAD_DE__, DYNCODE___(length),				\
-	loadNotVerify ? DYNCODE_SET_C : DYNCODE_SET_Z,			\
-	DYNCODE_JUMP__, DYNCODE___(ZX_ROM_LD_BYTES)			\
+	(loadNotVerify ? DYNCODE_SET_C : DYNCODE_SET_Z) |		\
+	DYNCODE_CALL__, DYNCODE___(ZX_ROM_LD_BYTES)			\
+	DYNCODE_LOAD_HL__, DYNCODE___(0),				\
+	DYNCODE_RET_NC |						\
+        DYNCODE_DEC_HL,						       	\
+	DYNCODE_DONE							\
 	))
 
 #define ZX_ROM_CLS        0x0d6b    // CLS
