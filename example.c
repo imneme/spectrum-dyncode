@@ -44,6 +44,7 @@ int main()
 //  *((char*) 0x5c3b) |= 0x0c;        // Set bits 2 and 3 of FLAGS (N/A)
     *((char**) 0x5C5B) = cursor_pos;  // Set K_CUR to cursor position.
     key = zx_rom_wait_key();
+    *((char*) 0x5c41) = 0;            // Reset mode
     putchar(' ');
     putchar(0x08);
     chan_open(2);
@@ -62,8 +63,7 @@ int main()
     *cp = '\0';
     printf("You entered: '%s'\n", cursor_pos);
 
-    // This value is naccurate because the stack is moved above RAMTOP
-    free_mem = 65535 - (unsigned short)zx_rom_test_room(0);
+    free_mem = 65535 - zx_rom_test_room(0);
     // IF we didn't move the stack during the rom call, to where BASIC
     // expects it, we'd need to correct it (assuming org 32768).
     // free_mem -= ((unsigned short)get_sp(0)) - 32768;
