@@ -13,7 +13,16 @@ short zx_romcall_stdstack(unsigned short) __stdc __z88dk_fastcall;
 short zx_romcall_stdstack_err(short (*handler)(void), unsigned short) 
     __stdc __z88dk_callee __stdc;
 
-#define DYNCODE_DONE	     	0x00c9
+#define DYNCODE_DONE	     	DYNCODE_RET
+#define DYNCODE_RET             0x00c9
+#define DYNCODE_RET_NZ          0x00c0
+#define DYNCODE_RET_Z           0x00c8
+#define DYNCODE_RET_NC          0x00d0
+#define DYNCODE_RET_C           0x00d8
+#define DYNCODE_RET_PO          0x00e0
+#define DYNCODE_RET_PE          0x00e8
+#define DYNCODE_RET_P           0x00f0
+#define DYNCODE_RET_M           0x00f8
 
 #define DYNCODE_NOP             0x0000
 #define DYNCODE_CRASH           0x76f3
@@ -266,5 +275,44 @@ short zx_romcall_stdstack_err(short (*handler)(void), unsigned short)
 #define DYNCODE_RST_28(defb)	((((char) defb) << 8) | 0xef)
 #define DYNCODE_RST_30   	0xf700
 #define DYNCODE_RST_38	        0xff00
+
+#define DYNCODE_INC_BC          0x0300
+#define DYNCODE_INC_B           0x0400
+#define DYNCODE_INC_C           0x0c00
+#define DYNCODE_INC_DE          0x1300
+#define DYNCODE_INC_D           0x1400
+#define DYNCODE_INC_E           0x1c00
+#define DYNCODE_INC_HL          0x2300
+#define DYNCODE_INC_H           0x2400
+#define DYNCODE_INC_L           0x2c00
+#define DYNCODE_INC_SP          0x3300
+#define DYNCODE_INC_IND_HL      0x3400
+#define DYNCODE_INC_A           0x3c00
+#define DYNCODE_INC_IX          0x23dd
+#define DYNCODE_INC_IXH         0x24dd
+#define DYNCODE_INC_IXL         0x2cdd
+#define DYNCODE_INC_IY          0x23fd
+#define DYNCODE_INC_IYH         0x24fd
+#define DYNCODE_INC_IYL         0x2cfd
+
+#define DYNCODE_DEC_BC          0x0b00
+#define DYNCODE_DEC_B           0x0500
+#define DYNCODE_DEC_C           0x0d00
+#define DYNCODE_DEC_DE          0x1b00
+#define DYNCODE_DEC_D           0x1500
+#define DYNCODE_DEC_E           0x1d00
+#define DYNCODE_DEC_HL          0x2b00
+#define DYNCODE_DEC_H           0x2500
+#define DYNCODE_DEC_L           0x2d00
+#define DYNCODE_DEC_IND_HL      0x3500
+#define DYNCODE_DEC_SP          0x3b00
+#define DYNCODE_DEC_A           0x3d00
+#define DYNCODE_DEC_IX          0x2bdd
+#define DYNCODE_DEC_IXH         0x25dd
+#define DYNCODE_DEC_IXL         0x2ddd
+#define DYNCODE_DEC_IY          0x2bfd
+#define DYNCODE_DEC_IYH         0x25fd
+#define DYNCODE_DEC_IYL         0x2dfd
+
 
 #endif // DYNCODE_H_INCLUDED
