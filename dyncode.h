@@ -6,6 +6,7 @@
 #endif
 
 short dyncode_zx_romcall(unsigned short magic, ...) __stdc;
+short dyncode_zx_romcall_err(short (*handler)(void), ...) __stdc;
 short dyncode_zx_romcall_stdstack(unsigned short magic, ...) __stdc;
 short dyncode_zx_romcall_stdstack_err(short (*handler)(void), ...) __stdc;
 short zx_romcall(unsigned short) __stdc __z88dk_fastcall;

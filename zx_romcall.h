@@ -11,6 +11,13 @@ extern void zx_exit_msg(char* message, short code);
 
 #define ZX_ROM_PRINT_A_1  0x0010    // print char to current stream
 
+#define zx_rom_print_a_1(c)					    \
+    ((char*) dyncode_zx_romcall_stdstack(			    \
+	DYNCODE_LOAD_A(c),					    \
+	DYNCODE_RST_10,						    \
+        DYNCODE_DONE						    \
+    ))
+
 #define ZX_ROM_BC_SPACES  0x0030    // allocate workspace
 
 /* call with either
@@ -160,11 +167,11 @@ extern void zx_exit_msg(char* message, short code);
 	DYNCODE_JUMP__, DYNCODE___(ZX_ROM_RECLAIM_2)			\
 	))
 
-#define ZX_ROM_OUT_NUM_3  0x1a1B    // print a num (<9999) from HL, (E=...)
+#define ZX_ROM_OUT_NUM_1  0x1a1B    // print a num (<9999) from BC, (E=...)
 
-#define zx_rom_out_num_3(num,space)					\
+#define zx_rom_out_num_1(num,space)					\
     ((void*) dyncode_zx_romcall(                                        \
-        DYNCODE_LOAD_HL__, DYNCODE___(num),				\
+        DYNCODE_LOAD_BC__, DYNCODE___(num),				\
         DYNCODE_LOAD_E(space),						\
         DYNCODE_JUMP__, DYNCODE___(ZX_ROM_OUT_NUM_3)                  \
 	))
@@ -182,8 +189,9 @@ extern void zx_exit_msg(char* message, short code);
 
 #define ZX_ROM_TEST_ROOM  0x1f05    // check for free mem in basic workspace
 
-#define zx_rom_test_room(space)					\
+#define zx_rom_test_room(space)						\
     ((unsigned short) dyncode_zx_romcall_stdstack(			\
+        DYNCODE_LOAD_BC__, DYNCODE___(space),				\
         DYNCODE_JUMP__, DYNCODE___(ZX_ROM_TEST_ROOM)			\
         ))
 
